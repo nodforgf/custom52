@@ -129,19 +129,26 @@
         }
         #message-overlay.show { opacity: 1; pointer-events: auto; }
         #message-card {
-            max-width: 560px; width: 92vw; padding: 36px 40px; text-align: center;
+            max-width: 560px; width: 92vw; text-align: center;
             transform: translateY(20px) scale(0.95);
             transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
             position: relative;
-            max-height: 90vh;
+            /* overflow ต้องเป็น visible เพื่อไม่ clip ::before หัวใจที่ top:-10px */
+            overflow: visible;
+        }
+        /* wrapper ด้านในรับหน้าที่ scroll แทน */
+        #message-card-inner {
+            padding: 28px 40px 36px;
+            max-height: 88vh;
             overflow-y: auto;
+            border-radius: 20px;
+            position: relative;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,105,180,0.4) transparent;
-            border-radius: 20px;
         }
-        #message-card::-webkit-scrollbar { width: 5px; }
-        #message-card::-webkit-scrollbar-track { background: transparent; }
-        #message-card::-webkit-scrollbar-thumb { background: rgba(255,105,180,0.4); border-radius: 99px; }
+        #message-card-inner::-webkit-scrollbar { width: 5px; }
+        #message-card-inner::-webkit-scrollbar-track { background: transparent; }
+        #message-card-inner::-webkit-scrollbar-thumb { background: rgba(255,105,180,0.4); border-radius: 99px; }
         #message-overlay.show #message-card { transform: translateY(0) scale(1); }
         #message-image-wrap {
             position: relative;
@@ -653,6 +660,7 @@
 
     <div id="message-overlay">
         <div id="message-card">
+            <div id="message-card-inner">
             <!-- GIF sticker แสดงด้านบน (เฉพาะ effect plates) -->
             <div id="sticker-wrap" style="display:none">
                 <img id="sticker-gif" src="" alt="">
@@ -671,6 +679,7 @@
             <!-- canvas สำหรับ confetti/stars effect -->
             <canvas id="effect-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;border-radius:28px;"></canvas>
             <button id="message-close">CLOSE ✦</button>
+            </div>
         </div>
     </div>
 
